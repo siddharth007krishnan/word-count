@@ -1,8 +1,6 @@
 #!/home/siddharth/.nvm/versions/node/v16.13.0/bin/node
 import { createReadStream, readFile } from "fs";
 
-let fileContents;
-
 /**
  * @TODO Can I read words,chars,lines,bytes from multiple files.
  */
@@ -32,6 +30,35 @@ const parseArguments = () => {
   })
 }
 
+/**
+ * 
+ * @param {string} data - Data to be counted for words, chars and lines which is streamed from stdin or a file (using createReadStream).This is the chunked data which will be returned by the createReadStream 
+ */
+function countWords(data) {
+  for (let i = 0; i < data.length; ++i) {
+    currentCharacter = data.at(i)
+    console.log(currentCharacter)
+    const byteLength = Buffer.from(String.fromCharCode(data.codePointAt(i))).byteLength
+    numberOfBytes2 += byteLength
+    if (currentCharacter == "\n" || currentCharacter == "\r" || currentCharacter == "\f") {
+      ++numberOfLines2
+      if (isCharacterAlreadyPresentInLine) {
+        ++numberOfWords
+      }
+      isCharacterAlreadyPresentInLine = false
+    }
+
+    if (previousCharacterEncountered === " " && currentCharacter !== " " && currentCharacter !== "\t" && currentCharacter !== "\n" && currentCharacter !== "\r") {
+      isCharacterAlreadyPresentInLine = true
+      isACharacterAfterSpace = true
+      previousWord += currentCharacter
+      ++numberOfWords
+    }
+    previousCharacterEncountered = currentCharacter
+    ++numberOfCharacters;
+  }
+}
+
 let numberOfCharacters = 0;
 let numberOfLines = 0;
 let numberOfWords = 0;
@@ -49,26 +76,25 @@ let previousWord = ''
 parseArguments()
 const fileReadStream = createReadStream(fileName, { encoding: 'utf-8' })
 fileReadStream.on('data', data => {
+  // countWords(data)
   for (let i = 0; i < data.length; ++i) {
     currentCharacter = data.at(i)
-    console.log(currentCharacter)
-    const byteLength = Buffer.from(String.fromCharCode(data.codePointAt(i))).byteLength
-    numberOfBytes2 += byteLength
-    if (currentCharacter == "\n" || currentCharacter == "\r" || currentCharacter == "\f") {
-      ++numberOfLines2
-      if (isCharacterAlreadyPresentInLine) {
+    const currentCharacterByteLength = Buffer.from(String.fromCharCode(data.codePointAt(i))).byteLength
+    numberOfBytes2 += currentCharacterByteLength
+    ++numberOfCharacters
+    if ([" ", "\t"].includes(currentCharacter)) {
+      if (![" ", "\n", "\t", "\f"].includes(previousCharacterEncountered)) {
         ++numberOfWords
       }
-      isCharacterAlreadyPresentInLine = false
     } else
-      if (previousCharacterEncountered === " " && currentCharacter !== " " && currentCharacter !== "\t" && currentCharacter !== "\n" && currentCharacter !== "\r") {
-        isCharacterAlreadyPresentInLine = true
-        isACharacterAfterSpace = true
-        previousWord += currentCharacter
+    if (["\n", "\r", "\f"].includes(currentCharacter)) {
+      if (![" ", "\n", "\r", "\f", "\t"].includes(previousCharacterEncountered)) {
         ++numberOfWords
       }
+      ++numberOfLines
+    }
     previousCharacterEncountered = currentCharacter
-    ++numberOfCharacters;
+    // console.log(currentCharacter)
   }
 })
 // readFile(fileName, { encoding: 'utf8' }, (err, data) => {
@@ -125,7 +151,7 @@ fileReadStream.on('data', data => {
 // })
 fileReadStream.on('end', () => {
   console.log("Number of bytes =", numberOfBytes2);
-  console.log("Number of Line =", numberOfLines2);
+  console.log("Number of Line =", numberOfLines);
   console.log("Number of characters = ", numberOfCharacters);
 
   console.log("Number of words =>", numberOfWords);
