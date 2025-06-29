@@ -15,6 +15,30 @@ const flags = {
   c: false,
 };
 
+const formattedOutPutString = () => {
+  let outputString = ``
+  if (defaultOutputWithWordsLinesAndBytes) {
+    outputString = `  ${numberOfLines} ${numberOfWords} ${numberOfBytes} `
+  } 
+   if (flags.l) {
+    outputString += `${numberOfLines} `
+  }
+   if (flags.w) {
+    outputString += `${numberOfWords} `
+  } 
+  if (flags.b || flags.c) {
+    outputString += `${numberOfBytes} `
+  } 
+  if (flags.m) {
+    outputString += `${numberOfCharacters} `
+  }
+  if (fileName) {
+    outputString += `${fileName}`
+  }
+
+  return outputString
+}
+
 const WHITESPACE_CHARS = [" ", "\t"];
 const LINEBREAK_CHARS = ["\n", "\r", "\f"];
 
@@ -25,7 +49,6 @@ let defaultOutputWithWordsLinesAndBytes = true;
  */
 const parseArguments = () => {
   const args = process.argv.length > 2 ? process.argv.slice(2) : [];
-  console.log("logging args", args);
   args.forEach((arg) => {
     if (arg.includes("--") || arg.includes("--")) {
       defaultOutputWithWordsLinesAndBytes = false;
@@ -120,12 +143,13 @@ if (fileName) {
     ) {
       ++numberOfWords;
     }
-    console.log("Number of bytes =", numberOfBytes);
-    console.log("Number of Line =", numberOfLines);
-    if (flags.m) {
-      console.log("Number of characters = ", numberOfCharacters);
-    }
-    console.log("Number of Words = ", numberOfWords);
+    // console.log("Number of bytes =", numberOfBytes);
+    // console.log("Number of Line =", numberOfLines);
+    // if (flags.m) {
+    //   console.log("Number of characters = ", numberOfCharacters);
+    // }
+    // console.log("Number of Words = ", numberOfWords);
+    console.log(formattedOutPutString())
   });
 } else {
   process.stdin.setEncoding("utf-8");
@@ -139,11 +163,13 @@ if (fileName) {
     ) {
       ++numberOfWords;
     }
-    console.log("Number of bytes =", numberOfBytes);
-    console.log("Number of Line =", numberOfLines);
-    if (flags.m) {
-      console.log("Number of characters = ", numberOfCharacters);
-    }
-    console.log("Number of Words = ", numberOfWords);
+    // console.log("Number of bytes =", numberOfBytes);
+    // console.log("Number of Line =", numberOfLines);
+    // if (flags.m) {
+    //   console.log("Number of characters = ", numberOfCharacters);
+    // }
+    // console.log("Number of Words = ", numberOfWords);
+
+    console.log(formattedOutPutString())
   });
 }
