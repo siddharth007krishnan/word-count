@@ -16,28 +16,28 @@ const flags = {
 };
 
 const formattedOutPutString = () => {
-  let outputString = ``
+  let outputString = ``;
   if (defaultOutputWithWordsLinesAndBytes) {
-    outputString = `  ${numberOfLines} ${numberOfWords} ${numberOfBytes} `
-  } 
-   if (flags.l) {
-    outputString += `${numberOfLines} `
+    outputString = `  ${numberOfLines} ${numberOfWords} ${numberOfBytes} `;
   }
-   if (flags.w) {
-    outputString += `${numberOfWords} `
-  } 
+  if (flags.l) {
+    outputString += `${numberOfLines} `;
+  }
+  if (flags.w) {
+    outputString += `${numberOfWords} `;
+  }
   if (flags.b || flags.c) {
-    outputString += `${numberOfBytes} `
-  } 
+    outputString += `${numberOfBytes} `;
+  }
   if (flags.m) {
-    outputString += `${numberOfCharacters} `
+    outputString += `${numberOfCharacters} `;
   }
   if (fileName) {
-    outputString += `${fileName}`
+    outputString += `${fileName}`;
   }
 
-  return outputString
-}
+  return outputString;
+};
 
 const WHITESPACE_CHARS = [" ", "\t"];
 const LINEBREAK_CHARS = ["\n", "\r", "\f"];
@@ -143,13 +143,7 @@ if (fileName) {
     ) {
       ++numberOfWords;
     }
-    // console.log("Number of bytes =", numberOfBytes);
-    // console.log("Number of Line =", numberOfLines);
-    // if (flags.m) {
-    //   console.log("Number of characters = ", numberOfCharacters);
-    // }
-    // console.log("Number of Words = ", numberOfWords);
-    console.log(formattedOutPutString())
+    console.log(formattedOutPutString());
   });
 } else {
   process.stdin.setEncoding("utf-8");
@@ -163,13 +157,7 @@ if (fileName) {
     ) {
       ++numberOfWords;
     }
-    // console.log("Number of bytes =", numberOfBytes);
-    // console.log("Number of Line =", numberOfLines);
-    // if (flags.m) {
-    //   console.log("Number of characters = ", numberOfCharacters);
-    // }
-    // console.log("Number of Words = ", numberOfWords);
 
-    console.log(formattedOutPutString())
+    console.log(formattedOutPutString());
   });
 }
