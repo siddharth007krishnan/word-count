@@ -5,13 +5,36 @@ This is a word count simulation program written in Node.js as part of [coding ch
 
 # Steps to run
 
- ## Using Docker
+## Using Docker
 
     
-  * Clone the project.
-  * Ensure docker cli is installed in your machine.
-  * Build docker image 
-  ```bash
-  docker build . -t word-count:latest
-  ```
+* Clone the project.
+* Ensure docker cli is installed in your machine.
+* Build docker image 
+```bash
+docker build . -t word-count:latest
+```
+* Run the built docker-image
+```bash
+    docker run word-count:latest
+```
 
+## Using node js locally
+
+* Clone the project.
+* 
+```bash
+npm install
+```
+*
+```bash
+npm run
+```
+*
+```bash
+npm test
+```
+
+
+
+  
