@@ -1,5 +1,6 @@
-#!/home/siddharth/.nvm/versions/node/v16.13.0/bin/node
-import { createReadStream } from "fs";
+#!/usr/bin/env node
+
+const { createReadStream } = require("fs")
 
 /**
  * @TODO Can I read words,chars,lines,bytes from multiple files.
@@ -18,7 +19,7 @@ const flags = {
 const formattedOutPutString = () => {
   let outputString = ``;
   if (defaultOutputWithWordsLinesAndBytes) {
-    outputString = `  ${numberOfLines} ${numberOfWords} ${numberOfBytes} `;
+    outputString = `  ${numberOfLines}  ${numberOfWords} ${numberOfBytes} `;
   }
   if (flags.l) {
     outputString += `${numberOfLines} `;
@@ -39,8 +40,8 @@ const formattedOutPutString = () => {
   return outputString;
 };
 
-const WHITESPACE_CHARS = [" ", "\t"];
-const LINEBREAK_CHARS = ["\n", "\r", "\f"];
+const WHITESPACE_CHARS = [" ", "\t", "\v"];
+const LINEBREAK_CHARS = ["\n", "\f"];
 
 let defaultOutputWithWordsLinesAndBytes = true;
 
@@ -48,11 +49,15 @@ let defaultOutputWithWordsLinesAndBytes = true;
  * Parse the command line arguments and set the required filename for the program.
  */
 const parseArguments = () => {
+  /**
+   * @TODO add -L, --max-line-length 
+   * @TODO add -files0-from=F read input from files specified by NUL-terminated names in file F;
+   * If F is - then read names from standard input.
+   */
   const args = process.argv.length > 2 ? process.argv.slice(2) : [];
   args.forEach((arg) => {
-    if (arg.includes("--") || arg.includes("--")) {
+    if (arg.includes("--")) {
       defaultOutputWithWordsLinesAndBytes = false;
-      console.log("Logging flag", arg);
       switch (arg) {
         case "--bytes":
           flags.b = true;

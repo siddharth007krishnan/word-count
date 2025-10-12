@@ -1,7 +1,14 @@
 {
   "version": "0.0.1",
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "@types/node": "^20.11.13"
+  },
+  "bin": {
+    "ccwc": "./bin/ccwc.js"
+  },
+  "scripts": {
+    "start": "./ccwc.js -w test.txt",
+    "test": "sh wordCountTests.sh"
   }
 }
