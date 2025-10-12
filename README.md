@@ -1,6 +1,6 @@
 # Word Count
 
-This is a word count simulation program written in Node.js as part of [coding challenges](https://codingchallenges.fyi/challenges/intro) by John Crickett more on that [here](https://codingchallenges.fyi/challenges/challenge-wc).
+This is a word count (wc) unix command  simulation program written in Node.js as part of [coding challenges](https://codingchallenges.fyi/challenges/intro) by John Crickett more on that [here](https://codingchallenges.fyi/challenges/challenge-wc).
 
 
 # Steps to run
