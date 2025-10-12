@@ -16,7 +16,7 @@ docker build . -t word-count:latest
 ```
 * Run the built docker-image
 ```bash
-    docker run word-count:latest
+docker run word-count:latest
 ```
 
 ## Using node js locally
@@ -28,7 +28,7 @@ npm install
 ```
 *
 ```bash
-npm run
+npm start
 ```
 *
 ```bash
